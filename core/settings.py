@@ -181,6 +181,17 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
     ),
 
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+        'mytask.throttles.InvalidMethodThrottle'
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/hour',
+        'user': '2/hour',
+        'invalid_method': '15/hour'
+    }
+
 }
 
 # REST_AUTH_REGISTER_SERIALIZERS = {
@@ -196,10 +207,10 @@ REST_FRAMEWORK = {
 # JWT_AUTH_COOKIE_USE_CSRF = False
 # # JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED = True
 # JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED = False
-# SIMPLE_JWT = {
-# 'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-# 'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-# 'ROTATE_REFRESH_TOKENS': False,
-# 'BLACKLIST_AFTER_ROTATION': False
-# }
+SIMPLE_JWT = {
+'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+'ROTATE_REFRESH_TOKENS': False,
+'BLACKLIST_AFTER_ROTATION': False
+}
 

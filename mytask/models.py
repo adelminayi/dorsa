@@ -4,7 +4,7 @@ from django.db import models
 class AddValues(models.Model):
     avalue = models.IntegerField()
     bvalue = models.IntegerField()
-    bvalue = models.IntegerField()
+    sumvalue = models.IntegerField()
 
     def __str__(self):
         return self.avalue + ' ' + self.bvalue
