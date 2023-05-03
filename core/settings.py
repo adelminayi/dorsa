@@ -40,13 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-    'rest_framework_simplejwt',
 
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'dj_rest_auth',
     'dj_rest_auth.registration',
-
+    'drf_yasg',
     'allauth',
     'allauth.account',
     'mytask',
@@ -98,15 +98,15 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    # },
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
@@ -151,16 +151,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SITE_ID = 1
 
-ACCOUNT_ADAPTER ='allauth.account.adapter.DefaultAccountAdapter'
-ACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_MAX_EMAIL_ADDRESSES = 3
-ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
-ACCOUNT_EMAIL_VERIFICATION = 'none'     ######## 'mandatory'/'optional/none'
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
-ACCOUNT_USERNAME_BLACKLIST =[]
-ACCOUNT_ADAPTER = "mytask.adapter.MyAdapter"
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -184,29 +174,15 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_CLASSES': (
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle',
-        'mytask.throttles.InvalidMethodThrottle'
     ),
     'DEFAULT_THROTTLE_RATES': {
         'anon': '100/hour',
-        'user': '2/hour',
-        'invalid_method': '15/hour'
+        'user': '100/hour',
+        'custom':'15/hour'
     }
 
 }
 
-# REST_AUTH_REGISTER_SERIALIZERS = {
-#     'REGISTER_SERIALIZER':'utils.RegisterSerializer', 
-#     }
-
-
-# REST_USE_JWT = True
-# JWT_AUTH_COOKIE = 'jirnal-auth'
-# JWT_AUTH_REFRESH_COOKIE = 'jirnal-refresh-token'
-# JWT_AUTH_SECURE = True    # send cookie over https
-# # JWT_AUTH_COOKIE_USE_CSRF = True
-# JWT_AUTH_COOKIE_USE_CSRF = False
-# # JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED = True
-# JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED = False
 SIMPLE_JWT = {
 'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
 'REFRESH_TOKEN_LIFETIME': timedelta(days=1),

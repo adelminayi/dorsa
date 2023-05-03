@@ -7,4 +7,4 @@ class AddValues(models.Model):
     sumvalue = models.IntegerField()
 
     def __str__(self):
-        return self.avalue + ' ' + self.bvalue
+        return str(self.avalue) + ' + ' + str(self.bvalue)

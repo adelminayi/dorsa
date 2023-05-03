@@ -25,19 +25,33 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Snippets API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=[permissions.AllowAny],
+)
 
 urlpatterns = [
     path('adminPanel/', admin.site.urls),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     path('auth/', include('dj_rest_auth.urls')),
     path('auth/registration/', include('dj_rest_auth.registration.urls')),
-    # path('auth/account-confirm-email/',  VerifyEmailView.as_view(), name='account_email_verification_sent'),
-    # path('auth/account-check-email/',    CheckEmailAddressView.as_view(), name='account_email_check'),
-    # path('auth/reset-password/reset/',   EmailPasswordResetView.as_view(), name='rest_password_by_email'),
-    # path('auth/reset-password/confirm/', EmailPasswordResetConfirmView.as_view(), name='confirm_rest_password_by_email'),
     path('api/', include('mytask.urls')),
 ]
 
